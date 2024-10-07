@@ -25,7 +25,7 @@ import Lesson9 from "./Lesson9";
 import ColorChangerApp from "./ColorChangerApp";
 
 // importing the  defined function of api request hndling  :
-    import apiRequest from "./apiRequest";
+import apiRequest from "./apiRequest";
 
 const Content = () => {
   //  Define a varible of the [API url] to deal with it using [fetch()]  :
@@ -84,78 +84,78 @@ const Content = () => {
   //  ---------------------------------------
 
   // b- [Switching Clicking of item list ] =>  Define Handling click function to handle the clicked input [more dynamically] :
-  const handleClick =  async (id) => {
-    
+  const handleClick = async (id) => {
+
     // 1- Define a variable  (of the  mapped items) from the given array after modifying the checked state :
     const listItems = items.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
-    
+
     // Adding the new value of the  [list items] into the defined  state of [items] after being updated (change checked property after checking an input ) :
     setItems(listItems);
-    
+
     //  Define the new single of item inside a new variable [to be used inside the object of the updateOptions 'as one of the array element' of the  items'  -> body ] :
     const myItem = items.filter((item) => item.id === id);
-    
+
     //  Define an object of  options  of hanlding {updating/patching} crud opertation [changing  one of item property ] the list item using  :
     const updateOptions = {
       method: "PATCH",
-      heaedrs: {
+      headers: {
         "Content-Type": "application/json",
       },
-      
+
       // Assign the updated value of a certain item's property as one of array with a specific property  [myItem[0].checked -> represent the checked prpety value of the first and only firlered item of item array ] :
-      body: JSON.stringify({ checked : myItem[0].checked }),
+      body: JSON.stringify({ checked: myItem[0].checked }),
     };
 
     // Define a variable of updating item property [=> to be used as the first parameter 'as a litter string value' of the called apiRequest imported function]  : 
-    const reqUrl =  `${API_URL}/${id}` ;
+    const reqUrl = `${API_URL}/${id}`;
 
     // Define a variable of [Posting curd operation] calling the imported apiRequest function with  only Define a variable of updating item property [not all listitems] +  object of {updateOptions}       :
-    const result = await apiRequest( reqUrl , updateOptions) ;
+    const result = await apiRequest(reqUrl, updateOptions);
 
     // Checking if there is a value of variable of [posting crud operation] is already existed   =>  and assign it as the valiue of the {fetchError} state : 
-     if(result) setFetchError(result);
+    if (result) setFetchError(result);
 
   };
   // ------------------------------------------------------------
 
   // c- [Deletion function of the items inside items list ] => Define the function of deleting the item from the list   :
-  const handleDelete =  async  (id) => {
+  const handleDelete = async (id) => {
     // 1- Creating a new array of item - of non selected items - to be stored as new array of items (withou the selected item to be abandon from the new array ) :
     const listItems = items.filter((item) => item.id !== id);
 
     // Adding the new value of the [list items] into the defined state of [items] after being updated ( remove an input form the list  ) :
     setItems(listItems);
 
-  // Define a variable of getting the item to be deleted : 
-    const reqUrl = `${API_URL}/${id}`  ;
+    // Define a variable of getting the item to be deleted : 
+    const reqUrl = `${API_URL}/${id}`;
 
-  // Define the  object of  deletion CRUD operation  : 
-    const deleteOptions  = {
-      method  : 'DELETE'
-    } 
+    // Define the  object of  deletion CRUD operation  : 
+    const deleteOptions = {
+      method: 'DELETE'
+    }
 
-  // Define a result variable of [deletion curd opertaion]  :
-    const result =  await apiRequest(reqUrl  , deleteOptions) ;
+    // Define a result variable of [deletion curd opertaion]  :
+    const result = await apiRequest(reqUrl, deleteOptions);
 
-  // Checking if there is a value of variable of deletion operation crud is already existed   =>  and assign it as the valiue of the {fetchError} state     :
-    if(result) setFetchError(result) ;
+    // Checking if there is a value of variable of deletion operation crud is already existed   =>  and assign it as the valiue of the {fetchError} state     :
+    if (result) setFetchError(result);
 
   };
   // ----------------------------------------------------------------
 
   // Define a function of adding the new item id to modified items list object accroding to it :
   const addItem = async (item) => {
-    
+
     // Getting the new item id with increament (or by  (1) if the list is  emtpy ) [according to index , after checking of the existance of the main items] :
     // const id = items.length ? items[items.length - 1].id + 1 : 1;
-    const id  = items.length ? items[items.length - 1].id + 1  : 1;
-     
+    const id = items.length ? items[items.length - 1].id + 1 : 1;
+
     // const id = items.length ? toString(parseInt(items[items.length - 1].id) + 1) : 1;
 
     // Define a variable of the new single  item , to set it's as  parameters value of body's stringify parmater of the object  postOptions ]   :
-    const myNewItem = { id  , checked: false, item };
+    const myNewItem = { id, checked: false, item };
 
     // Define a temprory array of Adding the previous defind new item element [myNewItem] , to the current array (with spreaing  opperator) state of [itemslist] :
     const listItems = [...items, myNewItem];
@@ -165,7 +165,7 @@ const Content = () => {
     // Define a object of main parameters requried for handling [posting/updating] crud operation -> [ Sending data to the api datahase    ] :
     const postOptions = {
       method: "POST",
-      heaedrs: {
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(myNewItem),
